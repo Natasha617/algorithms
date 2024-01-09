@@ -1,0 +1,21 @@
+(defparameter N (+ (* 2 10000000) 5))
+(defparameter prime (make-list (1+ N) :initial-element 1))
+(setf (nth 0 prime) 0)
+(setf (nth 1 prime) 0)
+
+(dotimes (i (1+ N))
+  (when (= 1 (nth i prime))
+    (dotimes (j (ceiling (/ N i)))
+      (setf (nth (* i j) prime) 0))))
+
+(defun isPrime (n)
+  (nth n prime))
+
+(let ((d '()))
+  (dotimes (_ (parse-integer (read-line)))
+    (let ((n (parse-integer (read-line))))
+      (if (isPrime n)
+          (push 'YES d)
+          (push 'NO d)))
+    )
+  (format t "~{~a~%~}" (reverse d)))
